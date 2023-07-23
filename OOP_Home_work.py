@@ -6,7 +6,7 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
-
+        self.average_rating = 0
 
     def add_courses(self, course_name):
         self.finished_courses.append(course_name)
@@ -18,8 +18,8 @@ class Student:
             for i in key:
                 b += i
                 a.append(i)
-        average_rating = b / len(a)
-        res = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {round(average_rating, 2)}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
+        self.average_rating = b / len(a)
+        res = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {round(self.average_rating, 2)}\nКурсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
         return res
 
 #задание 2
@@ -37,10 +37,12 @@ class Mentor:
         self.name = name
         self.surname = surname
         self.courses_attached = []
+        self.average_rating = 0
 
 
 class Lecturer(Mentor):
     grades = {}
+
     def __str__(self):
         a = []
         b = 0
@@ -48,10 +50,14 @@ class Lecturer(Mentor):
             for i in key:
                 b += i
                 a.append(i)
-        average_rating = b / len(a)
-        res = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {round(average_rating, 2)}\n'
+        self.average_rating = b / len(a)
+        res = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {round(self.average_rating, 2)}\n'
         return res
-    pass
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            print('Not a Student!')
+        return self.average_rating < other.average_rating
+
 class Rewiewer(Mentor):
 # Задание 2
     def rate_hw(self, student, course, grade):
@@ -93,3 +99,4 @@ best_student.finished_courses += ['Some course #1', 'Some course #2']
 print(cool_Rewiewer)
 print(cool_Lecturer)
 print(best_student)
+print(cool_Lecturer < best_student)
