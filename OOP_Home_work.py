@@ -9,7 +9,15 @@ class Student:
 
     def add_courses(self, course_name):
         self.finished_courses.append(course_name)
-
+#задание 2
+    def rate_lector(self, lector, course, grade):
+        if isinstance(lector, Lecturer) and course in lector.courses_attached and course in lector.courses_attached:
+            if course in lector.grades:
+                lector.grades[course] += [grade]
+            else:
+                lector.grades[course] = [grade]
+        else:
+            return 'Ошибка'
 
 class Mentor:
     def __init__(self, name, surname):
@@ -17,6 +25,13 @@ class Mentor:
         self.surname = surname
         self.courses_attached = []
 
+
+class Lecturer(Mentor):
+    grades = {}
+
+    pass
+class Rewiewer(Mentor):
+# Задание 2
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades:
@@ -25,19 +40,26 @@ class Mentor:
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
-class Lecturer(Mentor):
-    pass
-class Rewiewer(Mentor):
-    pass
+
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
 best_student.courses_in_progress += ['Python']
 
-cool_mentor = Mentor('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
+cool_Rewiewer = Rewiewer('Some', 'Buddy')
+cool_Rewiewer.courses_attached += ['Python']
 
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
+cool_Rewiewer.rate_hw(best_student, 'Python', 10)
+cool_Rewiewer.rate_hw(best_student, 'Python', 10)
+cool_Rewiewer.rate_hw(best_student, 'Python', 10)
 
 print(best_student.grades)
+
+# Задание 2
+cool_Lecturer = Lecturer('Someone', 'Someone-else')
+cool_Lecturer.courses_attached += ['Python']
+best_student.rate_lector(cool_Lecturer, 'Python', 10)
+best_student.rate_lector(cool_Lecturer, 'Python', 10)
+best_student.rate_lector(cool_Lecturer, 'Python', 10)
+best_student.rate_lector(cool_Lecturer, 'Python', 10)
+
+print(cool_Lecturer.grades)
